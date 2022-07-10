@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert ,Image} from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
@@ -7,6 +7,7 @@ import { TextInput, Button } from 'react-native-paper';
 import { theme } from '../Core/theme';
 import DatePicker from 'react-native-date-picker';
 import axios from 'axios';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 
 function AddEventsScreen({ navigation }) {
@@ -17,6 +18,21 @@ function AddEventsScreen({ navigation }) {
   const [Link, setLink] = useState('');
   const [time, setTime] = useState(new Date());
   const [openTime, setOpenTime] = useState(false);
+  const [imageUri, setimageUri] = useState('')
+
+
+  const handleChoosePhoto = () => {
+    launchImageLibrary({ noData: true }, (response) => {
+      console.log(response);
+      if (response) {
+        console.log(response.assets[0].uri);
+        setimageUri(response.assets[0].uri);
+
+        //handleImageUpload(source)
+      }
+    });
+
+  };
 
   function onPublishPressed(){
     const data = {
@@ -27,6 +43,7 @@ function AddEventsScreen({ navigation }) {
       time: toString(time),
       // isApproved: 1,
       postedBy: 3,
+      image:imageUri
     }
     console.log(data)
   
@@ -75,9 +92,12 @@ function AddEventsScreen({ navigation }) {
           mode="outlined"
           uppercase={false}
           labelStyle={Styles.imageButtonlabelStyle}
-          onPress={() => Alert.alert('Select Image')}>
+          onPress={handleChoosePhoto}>
           Insert Image +
         </Button>
+        {imageUri?<Image style={{width:100,height:100,marginTop:10}} source={{
+          uri:imageUri
+        }}/>:null}
         {/* <Button title="Select Date" onPress={() => setOpen(true)} /> */}
        <View style={{flexDirection:"row",alignSelf:'center'}}
 >

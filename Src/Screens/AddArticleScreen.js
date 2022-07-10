@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image,ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { theme } from '../Core/theme';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import ImagePicker from 'react-native-image-picker';
 
 import storage from '@react-native-firebase/storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
+//import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -16,24 +18,8 @@ function AddArticleScreen({ navigation }) {
   const [content, setContent] = useState('');
   const [imageUri, setimageUri] = useState('')
 
-  /* const openGallery = () => {
-    const options = {
-      storageOptions: {
-        path: 'images',
-        mediaType: 'photo',
-      },
-      includebase64: true,
-    }
 
-    launchImageLibrary(options, response => {
-      console.log('Response = '.response);
-      const source = { uri: 'data:image/jpeg;base64' + response.base64 };
-      console.log(source);
-     // setimageUri(source)
-    })
 
-  } */
-  
 
   const handleChoosePhoto = () => {
     launchImageLibrary({ noData: true }, (response) => {
@@ -41,62 +27,12 @@ function AddArticleScreen({ navigation }) {
       if (response) {
         console.log(response.assets[0].uri);
         setimageUri(response.assets[0].uri);
-    
+
         //handleImageUpload(source)
       }
     });
-    
+
   };
-
-
-  const handleImageUpload = async(photo) => {
-    console.log("test",photo)
-      // const imageFile = {
-      //   uri: imageUri,
-      //   type: `test/${imageUri.split(".")[1]}`,
-      //   name: `test.${imageUri.split(".")[1]}`,
-      // };
-
-      const formData = new FormData();
-      formData.append("file",source);
-      formData.append("upload_preset", "ml_default");
-      formData.append("cloud_name", "vijitha-mahesh");
-
-      await axios.post(
-        "https://api.cloudinary.com/v1_1/vijitha-mahesh/auto/upload",
-        formData
-      ).then((reponse) => {console.log(reponse);
-        // const lk = reponse["data"]["secure_url"];
-        // console.log(lk);
-        // onSubmit({ productData, lk });
-      })
-      .catch((err)=>{console.log(err.response)})
-   
-    // console.log("response",imageUri.assets[0].fileName);
-
-    // if (imageUri) {
-    //     console.log("file name-",imageUri.assets[0].fileName);
-    //     const uploadTask = storage.ref(`${imageUri.assets[0].uri}`)
-    //     const pathToFile = `${imageUri.assets[0].uri}`;
-    //     uploadTask.putFile(pathToFile);
-        /* uploadTask.on(
-            (error) => {
-                console.log(error);
-            },
-            () => {
-                storage
-                    .ref('images')
-                    .child(imageUri.assets.fileName)
-                    .getDownloadURL()
-                    .then((url) => {
-                        setUrl(url);
-                    });
-            }
-        ); */
-    // }
-    // console.log('URL :' + url);
-};
-
 
   function publishPressed() {
 
@@ -105,6 +41,7 @@ function AddArticleScreen({ navigation }) {
       userId: 3,
       title: title,
       description: content,
+      image:imageUri
     }
     console.log(data)
 
@@ -119,8 +56,11 @@ function AddArticleScreen({ navigation }) {
 
   }
   return (
-    <View style={Styles.container}>
-      <View style={{ width: '98%', height: '70%', marginTop: 20 }}>
+  
+  
+     <View  style={Styles.container}> 
+
+      <View style={{ width: '98%', height: '50%', marginTop: 20 }}>
         <TextInput
           label="Article Title"
           underlineColor={theme.colors.primary}
@@ -144,7 +84,7 @@ function AddArticleScreen({ navigation }) {
         >
           Insert Image +
         </Button> */}
-
+        
         <Button
           style={Styles.imageButton}
           mode="outlined"
@@ -160,7 +100,7 @@ function AddArticleScreen({ navigation }) {
           height: 100,
           width: 100,
         }}/> */}
-        {imageUri?<Image style={{width:100,height:100}} source={{
+        {imageUri?<Image style={{width:100,height:100,marginTop:10}} source={{
           uri:imageUri
         }}/>:null}
         <Button
@@ -173,14 +113,17 @@ function AddArticleScreen({ navigation }) {
           Publish Article
         </Button>
       </View>
-    </View>
+
+</View> 
+   
+
   );
 }
 
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+   alignItems: 'center',
     width: '100%',
     backgroundColor: theme.colors.white,
     // justifyContent: 'center'

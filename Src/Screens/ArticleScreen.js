@@ -95,6 +95,7 @@ export default function ArticleScreen({navigation}) {
             articleName={item.title}
             author={item.description}
             date={item.date}
+            image={item.image}
           />
         )}
       />

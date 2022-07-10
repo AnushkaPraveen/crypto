@@ -14,7 +14,9 @@ const ArticleCard = ({image, articleName, author, date}) => {
         // )}
       />
       <Card.Cover
-        source={require('../Assets/article01.jpg')}
+        source={{
+          uri:image
+        }}
         style={styles.image}
       />
       <Card.Content>
