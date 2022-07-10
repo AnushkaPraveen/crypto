@@ -6,6 +6,7 @@ import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { launchImageLibrary } from 'react-native-image-picker';
 import axios from 'axios';
 import ImagePicker from 'react-native-image-picker';
+
 import storage from '@react-native-firebase/storage';
 
 
@@ -32,27 +33,52 @@ function AddArticleScreen({ navigation }) {
     })
 
   } */
+  
 
   const handleChoosePhoto = () => {
     launchImageLibrary({ noData: true }, (response) => {
       console.log(response);
       if (response) {
-        setimageUri(response);
+        console.log(response.assets[0].uri);
+        setimageUri(response.assets[0].uri);
+    
+        //handleImageUpload(source)
       }
     });
-    handleImageUpload()
+    
   };
 
 
-  const handleImageUpload = (e) => {
-   
-    console.log("response",imageUri.assets[0].fileName);
+  const handleImageUpload = async(photo) => {
+    console.log("test",photo)
+      // const imageFile = {
+      //   uri: imageUri,
+      //   type: `test/${imageUri.split(".")[1]}`,
+      //   name: `test.${imageUri.split(".")[1]}`,
+      // };
 
-    if (imageUri) {
-        console.log("file name-",imageUri.assets[0].fileName);
-        const uploadTask = storage.ref(`${imageUri.assets[0].uri}`)
-        const pathToFile = `${imageUri.assets[0].uri}`;
-        uploadTask.putFile(pathToFile);
+      const formData = new FormData();
+      formData.append("file",source);
+      formData.append("upload_preset", "ml_default");
+      formData.append("cloud_name", "vijitha-mahesh");
+
+      await axios.post(
+        "https://api.cloudinary.com/v1_1/vijitha-mahesh/auto/upload",
+        formData
+      ).then((reponse) => {console.log(reponse);
+        // const lk = reponse["data"]["secure_url"];
+        // console.log(lk);
+        // onSubmit({ productData, lk });
+      })
+      .catch((err)=>{console.log(err.response)})
+   
+    // console.log("response",imageUri.assets[0].fileName);
+
+    // if (imageUri) {
+    //     console.log("file name-",imageUri.assets[0].fileName);
+    //     const uploadTask = storage.ref(`${imageUri.assets[0].uri}`)
+    //     const pathToFile = `${imageUri.assets[0].uri}`;
+    //     uploadTask.putFile(pathToFile);
         /* uploadTask.on(
             (error) => {
                 console.log(error);
@@ -67,8 +93,8 @@ function AddArticleScreen({ navigation }) {
                     });
             }
         ); */
-    }
-    console.log('URL :' + url);
+    // }
+    // console.log('URL :' + url);
 };
 
 
@@ -134,7 +160,9 @@ function AddArticleScreen({ navigation }) {
           height: 100,
           width: 100,
         }}/> */}
-        
+        {imageUri?<Image style={{width:100,height:100}} source={{
+          uri:imageUri
+        }}/>:null}
         <Button
           style={Styles.publishButton}
           mode="outlined"
