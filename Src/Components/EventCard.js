@@ -14,7 +14,9 @@ const EventCard = ({image, eventName, notes, date,time, navigation}) => {
   return (
     <Card style={styles.container} mode="elevated">
       <Card.Cover
-        source={require('../Assets/Event01.png')}
+       source={{
+          uri:image
+        }}
         style={styles.image}
       />
       <Card.Content>

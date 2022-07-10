@@ -104,7 +104,7 @@ export default function ArticleScreen({navigation}) {
           }}
           renderItem={({item}) => (
             <EventCard
-              image={item.image}
+              image={item.imageLink}
               eventName={item.name}
               notes={item.description}
               date={item.eventDate}

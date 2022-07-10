@@ -43,7 +43,7 @@ function AddEventsScreen({ navigation }) {
       time: toString(time),
       // isApproved: 1,
       postedBy: 3,
-      image:imageUri
+      imageLink:imageUri
     }
     console.log(data)
   
