@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "930620257526",
+    "project_id": "crypto-505a4",
+    "storage_bucket": "crypto-505a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930620257526:android:40268c0c4015bd736b68d7",
+        "android_client_info": {
+          "package_name": "com.purern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930620257526-icng315rk58ba1ouvj8o71hrfr6g3880.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8cnM--xCN2XJt7bqm7dOlBVbUfY_mNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930620257526-icng315rk58ba1ouvj8o71hrfr6g3880.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
